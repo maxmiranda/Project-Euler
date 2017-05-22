@@ -18,19 +18,32 @@ for num in range(2,N):
 def is_prime(i):
     return primes[i]
 
-def constant_diff(lst):
-    lst.sort(reverse = True)
-    for i in range(lst-1):
-        if lst[i] - lst[i+1]
+def is_arith_seq(lst):
+    lst.sort()
+    for large in range(len(lst)):
+        for medium in range(large):
+            for small in range(medium):
+                if lst[large] - lst[medium] == lst[medium] - lst[small]:
+                    return [lst[small],lst[medium],lst[large]]
+    return []
 
+
+arith =[]
 for n in range(1000,10000):
     if is_prime(n):
         count =1
         perm_primes = [n]
         for perm in list(generate(str(n))):
             permutation = int(''.join(perm))
-            if is_prime(permutation) and permutation >1000 and permutation != n:
+            if is_prime(permutation) and permutation >= 1000 and permutation != n and not permutation in perm_primes:
                 count +=1
                 perm_primes.append(permutation)
-                if count ==3 and constant_diff(perm_primes):
-                    print(perm_primes)
+                if count >=3 and is_arith_seq(perm_primes):
+                    arith.append(is_arith_seq(perm_primes))
+
+output = []
+for x in arith:
+    if x not in output:
+        output.append(x)
+
+print(output)
